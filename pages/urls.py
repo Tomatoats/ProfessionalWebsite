@@ -5,4 +5,6 @@ from pages import views
 
 urlpatterns = [
     path("", views.home, name='home'),
+    path("compare/",views.spotify, name = 'spotify'),
+    path("compared/",views.load,name = 'spotify')
 ]
