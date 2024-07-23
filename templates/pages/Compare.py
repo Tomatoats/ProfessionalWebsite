@@ -6,6 +6,25 @@ from pages import models
 #now that we have id's, we can start making  the website
 
 
+
+
+
+def dict_compare(d1, d2):
+    set1 = set(d1.keys())
+    set2 = set(d2.keys())
+    intersection = set1.intersection(set2)
+    difset1 = set1.difference(intersection)
+    difset2 = set2.difference(intersection)
+    same = {}
+    for x in d1,intersection:
+        if intersection(x) == x.keys():
+            same.update({intersection(x):(x.values())})
+            x.popitem()
+    print(same)
+#TODO: So we can still have our regular compare go on , i think I get the ID's, and then just get the info i need as a dict after that cause this is shit man  
+
+
+
 def addtoModels(dif1,same,dif2):
     sp = getToken()
     d1map = {}
@@ -83,7 +102,7 @@ def compare(id1,id2):
 
 
 
-def callSpotify(p):
+def callSpotify(p,thisdict):
     offset = 0
     sp = getToken()
     print(sp)
@@ -94,56 +113,72 @@ def callSpotify(p):
 
     flag = True
     songids = []
-    #results = sp.playlist_items(p2,offset=offset,fields='items.track.name.total',additional_types=['track'])
-    #result = json.dumps(results, indent = 4)
+    #results = sp.playlist_items(p,offset=offset,fields='items.track',additional_types=['track'])
+    #result = json.dumps(results, indent=2)
+    #fileout = open("out.JSON","w+")
+    #fileout.write(result)
+    #print(results)
     #if len(results['items']) == 0:
     #flag = False
-    
+    count = 0
     while flag == True:
-
+    
         #results = sp.playlist_items(p2,offset=offset,fields='items.track.name.total',additional_types=['track'])
-        results = sp.playlist_items(p,offset=offset,fields='items.track.id.total',additional_types=['track'])
+        results = sp.playlist_items(p,offset=offset,fields='items.track',additional_types=['track'])
+        
+        
         if len(results['items']) == 0:
             flag = False
-        result =  json.dumps(results, indent = 4)
-        res = json.loads(result)
-        #print(results['items'])
+        
+        
 
-        #print(len(results['items']))
         
         offset = offset + len(results['items'])
         
-        #print(offset, "/", results['items'])
-        #print(results['items'])
-        #print(offset, "/", results['items'])
         
         for idx, track in enumerate(results['items']):
-            #print(idx,track)
-            songids.append(str(track)[18:40])
-            #print(str(track)[18:40])
+            listing = []
+            
+            songids.append(str(track['track']['id']))
+            pid = str(track['track']['id']) #pid
+            listing.append(str(track['track']['name'])) #name
+            listing.append(str(track['track']['artists'][0]['name'])) #artist
+            listing.append(str(track['track']['preview_url'])) #audio
+            listing.append(str(track['track']['album']['images'][2]['url'])) #album
+            
 
-    #pass
-    #print(songids)
-    return songids
+            #increment = 100*count + idx
+            #print("New Song!: ID:",pid)
+            #print("Name:", name)
+            #print(artist)
+            #print(audio)
+            #print(album)
+            #thisdict.update({"id":pid,"name":name,"artist":artist,"audio":audio,"album":album})
+
+            #thisdict.update({increment:pid{{"name":name},{"artist":artist},{"audio":audio},{"album":album}}})
+            thisdict.update({pid:listing})
+           
+            #print("toadd and increment:",toAdd,increment)
+        count +=1
+    #print(thisdict.items())
+    return songids,thisdict
+
+
     
-    
-    #string = "https://api.spotify.com/v1/playlists/"
-    #header = "Authorization: Bearer  BQDBKJ5eo5jxbtpWjVOj7ryS84khybFpP_lTqzV7uV-T_m0cTfwvdn5BnBSKPxKgEb11"
-    #url = string+p1
-    #print(url)
-    #response = requests.get(url)
-    #return response
-    #print(response)
-    #pass
 
 def getPlaylists(play1,play2):
     p1 = clean(play1)
     p2 = clean(play2)
-    id1 =  callSpotify(p1)
-    id2 = callSpotify(p2)
-    dif1,same,dif2 = compare(id1,id2)
-    return dif1,same,dif2
-
+    songdict= {}
+    id1,songdict =  callSpotify(p1,songdict)
+    id2,songdict = callSpotify(p2,songdict)
+    #dict_compare(dict1,dict2)
+    #print(id1,id2)
+    print("okay this is dict1:",len(songdict))
+    
+    dif1, same, dif2 = compare(id1,id2)
+    return dif1,same,dif2,songdict
+    #todo: Have a dict for all the song stuff we need, sets to show, and then we go down and find all the dict for said lists so that we don't have to results twice
     
     #print(len(dif1),len(same), len(dif2), "second time!")
 
