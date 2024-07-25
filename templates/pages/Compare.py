@@ -6,7 +6,12 @@ from pages import models
 #now that we have id's, we can start making  the website
 
 
-
+def toTest(p1,p2):
+    tohave = "https://open.spotify.com/playlist/"
+    if tohave in p1 and tohave in p2:
+        return True
+    else:
+        return False
 
 
 def dict_compare(d1, d2):
@@ -25,40 +30,39 @@ def dict_compare(d1, d2):
 
 
 
-def addtoModels(dif1,same,dif2):
-    sp = getToken()
-    d1map = {}
+def addtoModels(dif1,same,dif2,songs):
+    print("got to models!")
+    d1dict = {}
     d1 = []
-    smap = {}
+    sdict = {}
     sm = []
-    d2map = {}
+    d2dict = {}
     d2 = []
-    for x in dif1:
-        result = sp.track(x)
-        #print(result)
-        d1map['ID'] = x
-        d1map['name'] = result['name']
-        d1map['audio'] = result['preview_url']
-        d1.append(d1map)
-        #cover = result['images']['url']
+
     for x in same:
-        result = sp.track(x)
-        smap['ID'] = x
-        smap['name'] = result['name']
-        smap['audio'] = result['preview_url']
-        sm.append(smap)
+        sm = songs.get(x)
+        sdict.update({x:sm})
         #cover = result['image']
-    for x in dif2:
-        result = sp.track(x)
+
+    for x in dif1:
+        d1 = songs.get(x)
         #print(result)
-        d2map['ID'] = x
-        d2map['name'] = result['name']
-        d2map['audio'] = result['preview_url']
-        d2.append(d2map)
+
+        d1dict.update({x:d1})
+        #cover = result['images']['url']
+    for x in dif2:
+        d2 = songs.get(x)
+        #print(result)
+
+        d2dict.update({x:d2})
 
     #model = models.Global(len(dif1),len(same),len(dif2))
     #model.save()
-    pass
+    #print("Add to models numbers: ", len(sdict),len(d1dict),len(d2dict))
+
+   #for key, value in d1dict.items():
+        #print(f"{key}: {value}")
+    #return d1dict,sdict,d2dict
 
 
 
@@ -177,6 +181,7 @@ def getPlaylists(play1,play2):
     print("okay this is dict1:",len(songdict))
     
     dif1, same, dif2 = compare(id1,id2)
+    addtoModels(dif1,same,dif2,songdict)
     return dif1,same,dif2,songdict
     #todo: Have a dict for all the song stuff we need, sets to show, and then we go down and find all the dict for said lists so that we don't have to results twice
     

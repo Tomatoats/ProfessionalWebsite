@@ -1,4 +1,16 @@
-<h1>This was a big ol test! boo!</h1>
 
-<p>There's {{ sm }} same songs, and {{df1 }} different songs in the first playlist, {{df2}} different songs in the other</p>
+
+<h1>There's {{ sm }} same songs, and {{df1 }} different songs in the first playlist, {{df2}} different songs in the other</h1>
+
+<form name = see method = "POST">{% csrf_token %}
+<input type =  value="Lets See the songs!" id = "see">
+</form>
+<!--
+#TODO: okay so we wattag it, have a button here and when it is pressed, we get the html from a python to put in the block content
+#TODO: it'll go like this: Same songs in the middle, showing Name, artist, album photo, mp3, in a table, table being as long as amount of songs in same. if 0 : welp.
+#todo: then same but to the different songs on the side
+-->
+
+
+
 <p><a href = "/compare">Wanna try again?</a></p>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from templates.pages import Compare,makegood
+from django.contrib import messages
 from pages import models
 # Create your views here.
 def load(request,dif1,same,dif2):
@@ -19,14 +20,24 @@ def spotify(request):
         playlists = request.POST.dict()
         play1 =playlists.get("play1")
         play2 =playlists.get("play2")
+        try:
+            dif1,same,dif2,songdict = Compare.getPlaylists(play1,play2)
+        except:
+            return render(request,"pages/compare.html",{"badmessage":"These don't seem to be spotify links. Please use a link to a spotify playlist!"})
+        else:
         #print(play1,play2)
-        dif1,same,dif2,songdict = Compare.getPlaylists(play1,play2)
+            
+            #messages.info(request,'These links aren\'t spotify playlists. Try using the links of the playlist!')
+            #return render(request,"pages/compare.html",{"badmessage":"These don't seem to be spotify links. Please use a link to a spotify playlist!"})
+            
+            #TODO: Send a little message popup
+            dif1,same,dif2,songdict = Compare.getPlaylists(play1,play2)
         #dict1= dict(dif1)
         #print(dict1)
-        HttpResponse("pages/compared.html")
-        objects = models.Testing(dif1,same,dif2,songdict)
-        makegood.setup(objects)
-        return render(request, "pages/compared.html",{"df1":len(dif1), "sm":len(same),"df2":len(dif2)})
+            HttpResponse("pages/compared.html")
+            objects = models.Testing(dif1,same,dif2,songdict)
+            makegood.setup(objects)
+            return render(request, "pages/compared.html",{"df1":len(dif1), "sm":len(same),"df2":len(dif2)})
     else:
 
         return render(request, "pages/compare.html",{})
