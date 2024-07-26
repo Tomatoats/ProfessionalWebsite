@@ -224,8 +224,8 @@ def addtoModels(dif1,same,dif2,songs):
 
         d2dict.update({x:d2})
     print("meow")
-    html = buildHTML(sdict,d1dict,d2dict)
-    return html
+    #html = buildHTML(sdict,d1dict,d2dict)
+    return d1dict,sdict,d2dict
     #model = models.Global(len(dif1),len(same),len(dif2))
     #model.save()
     #print("Add to models numbers: ", len(sdict),len(d1dict),len(d2dict))
@@ -353,8 +353,10 @@ def getPlaylists(play1,play2):
 
     dif1, same, dif2 = compare(id1,id2)
     print("got after compare!")
-    html = addtoModels(dif1,same,dif2,songdict)
-    return dif1,same,dif2,html
+    d1dict, sdict, d2dict =addtoModels(dif1,same,dif2,songdict)
+    biglength = len(d1dict) if len(d1dict) >= len(d2dict) else len(d2dict)
+    print("meow part 2")
+    return d1dict,sdict,d2dict,biglength
     #todo: Have a dict for all the song stuff we need, sets to show, and then we go down and find all the dict for said lists so that we don't have to results twice
     
     #print(len(dif1),len(same), len(dif2), "second time!")

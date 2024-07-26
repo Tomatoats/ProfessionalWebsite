@@ -16,14 +16,61 @@
     tr:nth-child(even) {
       background-color: #dddddd;
     }
+    ul  {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
 </style>
 </head>
 <body>
 <h1>There's {{ sm }} same songs, and {{df1 }} different songs in the first playlist, {{df2}} different songs in the other</h1>
 <p><a href = "/compare">Wanna try again?</a></p>
 
-{{thetable}}
-
+{{len}}
+<!--
+<table>
+  <tr>
+    <th>Unique in Playlist 1</th>
+    <th>Same Songs in Both!</th>
+    <th>Unique in Playlist 2</th>
+  </tr>
+  {% for i in d%}
+  <tr>
+    <td>
+      <ul>
+        <li>{{i.dif1name}}</li>
+        <li>{{i.dif1artist}}</li>
+        <li>
+          <img src="{{i.dif1album}}" onmouseover="PlaySound('{{i.dif1ID}}')" onmouseout="StopSound('{{i.dif1ID}}')" />
+          <audio src="{{i.dif1audio}}" id="{{i.dif1ID}}"></audio>
+        </li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>{{i.samename}}</li>
+        <li>{{i.sameartist}}</li>
+        <li>
+          <img src="{{i.samealbum}}" onmouseover="PlaySound('{{i.sameID}}')" onmouseout="StopSound('{{i.sameID}}')" />
+          <audio src="{{i.sameaudio}}" id="{{i.sameID}}"></audio>
+        </li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>{{i.dif2name}}</li>
+        <li>{{i.dif2artist}}</li>
+        <li>
+          <img src="{{i.dif1album}}" onmouseover="PlaySound('{{i.dif2ID}}')" onmouseout="StopSound('{{i.dif2ID}}')" />
+          <audio src="{{dif2audio}}" id="{{i.dif2ID}}"></audio>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+-->
 <!--
 #TODO: okay so we wattag it, have a button here and when it is pressed, we get the html from a python to put in the block content
 #TODO: it'll go like this: Same songs in the middle, showing Name, artist, album photo, mp3, in a table, table being as long as amount of songs in same. if 0 : welp.
@@ -34,4 +81,17 @@
 
 
 </body>
+
+<script>
+  function PlaySound(soundobj) {
+    var thissound = document.getElementById(soundobj);
+    thissound.play();
+  }
+  
+  function StopSound(soundobj) {
+    var thissound = document.getElementById(soundobj);
+    thissound.pause();
+    thissound.currentTime = 0;
+  }
+  </script>
 </html>

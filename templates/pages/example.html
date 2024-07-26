@@ -17,6 +17,11 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+ul  {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
 </style>
 </head>
 <body>
@@ -31,12 +36,12 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td>
-    	<ul>
-			<li>{name}</li>
-            <li>{artist}</li>
-            <li> <img src = "https://i.scdn.co/image/ab67616d00004851699c10534ea98a2fcfc6b5da" onmouseover="PlaySound('audio-1')" onmouseout="StopSound('audio-1')">
+      <ul>
+			  <li>{name}</li>
+        <li>{artist}</li> 
+        <li> <img src = "https://i.scdn.co/image/ab67616d00004851699c10534ea98a2fcfc6b5da" onmouseover="PlaySound('audio-1')" onmouseout="StopSound('audio-1')">
             	<audio id = "audio-1" src="https://p.scdn.co/mp3-preview/979cc2cec4cd1d4b0470229dcbb096b9ede38bc7?cid=432742e8cdd04d149d847dd79a797024"> </audio>
-				</li>
+          </li>
 		</ul> 
     </td>
          
