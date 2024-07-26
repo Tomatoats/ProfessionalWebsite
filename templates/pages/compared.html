@@ -24,53 +24,59 @@
 </style>
 </head>
 <body>
-<h1>There's {{ sm }} same songs, and {{df1 }} different songs in the first playlist, {{df2}} different songs in the other</h1>
+<h1>There's {{length.0}}  same songs, and  {{length.1}}  different songs in the first playlist, {{length.2}} different songs in the other</h1>
 <p><a href = "/compare">Wanna try again?</a></p>
 
-{{len}}
 <!--
+Looks like the best way to have some type of Object
+this object has name, artist, album, audio, and ID
+for dif1,dif2,and same
+then we iterate on this x amount of times-->
+
+
+
 <table>
   <tr>
     <th>Unique in Playlist 1</th>
     <th>Same Songs in Both!</th>
     <th>Unique in Playlist 2</th>
   </tr>
-  {% for i in d%}
+  {% for x in ultlist %}
   <tr>
     <td>
       <ul>
-        <li>{{i.dif1name}}</li>
-        <li>{{i.dif1artist}}</li>
+        <li>{{x.1}}</li>
+        <li>{{x.2}}</li>
         <li>
-          <img src="{{i.dif1album}}" onmouseover="PlaySound('{{i.dif1ID}}')" onmouseout="StopSound('{{i.dif1ID}}')" />
-          <audio src="{{i.dif1audio}}" id="{{i.dif1ID}}"></audio>
+          <img src="{{x.4}}" onmouseover="PlaySound('{{x.0}}')" onmouseout="StopSound('{{x.0}}')" />
+          <audio src="{{x.3}}" id="{{x.0}}"></audio>
         </li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>{{i.samename}}</li>
-        <li>{{i.sameartist}}</li>
+        <li>{{x.6}}</li>
+        <li>{{x.7}}</li>
         <li>
-          <img src="{{i.samealbum}}" onmouseover="PlaySound('{{i.sameID}}')" onmouseout="StopSound('{{i.sameID}}')" />
-          <audio src="{{i.sameaudio}}" id="{{i.sameID}}"></audio>
+          <img src="{{x.9}}" onmouseover="PlaySound('{{x.5}}')" onmouseout="StopSound('{{x.5}}')" />
+          <audio src="{{x.8}}" id="{{x.5}}"></audio>
         </li>
       </ul>
     </td>
     <td>
       <ul>
-        <li>{{i.dif2name}}</li>
-        <li>{{i.dif2artist}}</li>
+        <li>{{x.11}}</li>
+        <li>{{x.12}}</li>
         <li>
-          <img src="{{i.dif1album}}" onmouseover="PlaySound('{{i.dif2ID}}')" onmouseout="StopSound('{{i.dif2ID}}')" />
-          <audio src="{{dif2audio}}" id="{{i.dif2ID}}"></audio>
+          <img src="{{x.14}}" onmouseover="PlaySound('{{x.10}}')" onmouseout="StopSound('{{x.10}}')" />
+          <audio src="{{x.13}}" id="{{x.10}}"></audio>
         </li>
       </ul>
     </td>
   </tr>
   {% endfor %}
 </table>
--->
+
 <!--
 #TODO: okay so we wattag it, have a button here and when it is pressed, we get the html from a python to put in the block content
 #TODO: it'll go like this: Same songs in the middle, showing Name, artist, album photo, mp3, in a table, table being as long as amount of songs in same. if 0 : welp.

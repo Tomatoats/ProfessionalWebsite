@@ -7,9 +7,43 @@ from yattag import Doc, indent
 #now that we have id's, we can start making  the website
 
 
+def ult(dif1,same,dif2):
+     #Now we put in one big list.
+    ultlist = []
+    for x in range(len(dif1)):
+        li = dif1[x]
+        s = same[x]
+        t = dif2[x]
+        list1 = li + s + t
+        ultlist.append(list1)
+    return ultlist
+def buildCompare(d1list,slist,d2list):
+    #I think here we're just gonna clean up the dicts to have it be clean
+    biglength = len(d1list) if len(d1list) >= len(d2list) else len(d2list)
+    #Making the dicts the same length with emptiness
+    leftover = biglength - len(d1list)
+    #ultlist = []
+    for x in range(leftover):
+        toAdd = ["","","","",""]
+        d1list.append(toAdd)
 
-
-
+    leftover = biglength - len(slist)
+    for x in range(leftover):
+        toAdd = ["","","","",""]
+        slist.append(toAdd)
+    leftover = biglength - len(d2list)
+    for x in range(leftover):
+        toAdd = ["","","","",""]
+        d2list.append(toAdd)
+    #Now we put in one big list.
+    
+    #for x in range(len(d1list)):
+    #    li = d1list[x]
+    #    li.append(slist[x])
+    #    li.append(d2list[x])
+    #    print(li)
+    #    ultlist.append(li)
+    return d1list,slist,d2list
 
 
 def buildHTML(sdict,d1dict,d2dict):
@@ -200,32 +234,46 @@ def dict_compare(d1, d2):
 
 def addtoModels(dif1,same,dif2,songs):
     print("got to models!")
-    d1dict = {}
     d1 = []
-    sdict = {}
     sm = []
-    d2dict = {}
     d2 = []
-
+    #lets make list models!
+    slist = []
+    d1list = []
+    d2list = []
     for x in same:
-        sm = songs.get(x)
-        sdict.update({x:sm})
+        sm = [x]
+        el = songs.get(x)
+        sm = sm + el
+
+        slist.append(sm)
+        #print(sm)
+        #sm = songs.get(x)
+        #sdict.update({x:sm})
         #cover = result['image']
 
     for x in dif1:
-        d1 = songs.get(x)
-        #print(result)
+        d1 = [x]
+        el = songs.get(x)
+        d1 = d1 + el
+        d1list.append(d1)
 
-        d1dict.update({x:d1})
+        #d1 = songs.get(x)
+        #d1dict.update({x:d1})
         #cover = result['images']['url']
     for x in dif2:
-        d2 = songs.get(x)
-        #print(result)
+        d2 = [x]
+        el = songs.get(x)
+        d2 = d2 + el
+        d2list.append(d2)
 
-        d2dict.update({x:d2})
+
+        #d2 = songs.get(x)
+        #d2dict.update({x:d2})
     print("meow")
     #html = buildHTML(sdict,d1dict,d2dict)
-    return d1dict,sdict,d2dict
+    d1list,slist,d2list = buildCompare(d1list,slist,d2list)
+    return d1list,slist,d2list
     #model = models.Global(len(dif1),len(same),len(dif2))
     #model.save()
     #print("Add to models numbers: ", len(sdict),len(d1dict),len(d2dict))
@@ -319,7 +367,7 @@ def callSpotify(p,thisdict):
             listing.append(str(track['track']['artists'][0]['name'])) #artist
             listing.append(str(track['track']['preview_url'])) #audio
             listing.append(str(track['track']['album']['images'][2]['url'])) #album
-            
+            # pid = 0, name = 1, artist = 2, audio = 3, album = 4
 
             #increment = 100*count + idx
             #print("New Song!: ID:",pid)
@@ -353,11 +401,28 @@ def getPlaylists(play1,play2):
 
     dif1, same, dif2 = compare(id1,id2)
     print("got after compare!")
-    d1dict, sdict, d2dict =addtoModels(dif1,same,dif2,songdict)
-    biglength = len(d1dict) if len(d1dict) >= len(d2dict) else len(d2dict)
+    length = [len(same),len(dif1),len(dif2)]
+    biglength = length[1] if length[1] >= length[2] else length[2]
+    print (length)
+    dif1,same,dif2 =addtoModels(dif1,same,dif2,songdict)
+
+
     print("meow part 2")
-    return d1dict,sdict,d2dict,biglength
+    a = []
+    for x in range(biglength):
+        a.append(x)
+    for x in a:
+        print(dif1[x][0])
+        print(same[x][1])
+        print(dif2[x][2])
+
+    
+    ultlist = ult(dif1,same,dif2)
+    #return dif1,same,dif2,length, biglength,a
+    return ultlist,length,biglength,a
     #todo: Have a dict for all the song stuff we need, sets to show, and then we go down and find all the dict for said lists so that we don't have to results twice
     
     #print(len(dif1),len(same), len(dif2), "second time!")
 
+#lets duck it
+# we have  

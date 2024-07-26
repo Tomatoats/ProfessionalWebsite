@@ -21,7 +21,8 @@ def spotify(request):
         play1 =playlists.get("play1")
         play2 =playlists.get("play2")
         try:
-            dif1,same,dif2,length = Compare.getPlaylists(play1,play2)
+            #dif1,same,dif2,length,biglength,a = Compare.getPlaylists(play1,play2)
+            ultlist,length,biglength,a = Compare.getPlaylists(play1,play2)
         except:
             return render(request,"pages/compare.html",{"badmessage":"These don't seem to be spotify links. Please use a link to a spotify playlist!"})
         else:
@@ -38,7 +39,8 @@ def spotify(request):
             #objects = models.Testing(dif1,same,dif2,songdict)
             #makegood.setup(objects)
             print("rendeerrr")
-            return render(request, "pages/compared.html",{"df1":len(dif1), "sm":len(same),"df2":len(dif2)})
+            #return render(request, "pages/compared.html",{"length":length,"dif1":dif1,"same":same,"dif2":dif2,"biglength":biglength,"a":a})
+            return render(request, "pages/compared.html",{"length":length,"ultlist":ultlist,"biglength":biglength,"a":a})
     else:
 
         return render(request, "pages/compare.html",{})
