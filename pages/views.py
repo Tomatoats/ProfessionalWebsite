@@ -31,7 +31,7 @@ def spotify(request):
             #return render(request,"pages/compare.html",{"badmessage":"These don't seem to be spotify links. Please use a link to a spotify playlist!"})
             
             #TODO: Send a little message popup
-            dif1,same,dif2,songdict = Compare.getPlaylists(play1,play2)
+            #dif1,same,dif2,songdict = Compare.getPlaylists(play1,play2)
         #dict1= dict(dif1)
         #print(dict1)
             HttpResponse("pages/compared.html")
