@@ -17,12 +17,12 @@ def ult(dif1,same,dif2):
         list1 = li + s + t
         ultlist.append(list1)
     return ultlist
+
 def buildCompare(d1list,slist,d2list):
-    #I think here we're just gonna clean up the dicts to have it be clean
+    #I think here we're just gonna clean up the lists to have it be clean
     biglength = len(d1list) if len(d1list) >= len(d2list) else len(d2list)
     #Making the dicts the same length with emptiness
     leftover = biglength - len(d1list)
-    #ultlist = []
     for x in range(leftover):
         toAdd = ["","","","",""]
         d1list.append(toAdd)
@@ -35,163 +35,8 @@ def buildCompare(d1list,slist,d2list):
     for x in range(leftover):
         toAdd = ["","","","",""]
         d2list.append(toAdd)
-    #Now we put in one big list.
-    
-    #for x in range(len(d1list)):
-    #    li = d1list[x]
-    #    li.append(slist[x])
-    #    li.append(d2list[x])
-    #    print(li)
-    #    ultlist.append(li)
+
     return d1list,slist,d2list
-
-
-def buildHTML(sdict,d1dict,d2dict):
-
-  
-    biglength = len(d1dict) if len(d1dict) >= len(d2dict) else len(d2dict)
-    print("got to html! Biglength = ", biglength)  
-    
-    #doc, tag, text = Doc().tagtext()
-    #Two Main Problems:
-    #One: How do i get the info out from the song dict into the html
-    #Two: How do I add this block of html into the compared.html
-    d1list = []
-    slist = []
-    d2list = []
-    for x,y in d1dict.items():
-        doc, tag, text = Doc().tagtext()
-        with tag('td'):
-                with tag('ul'):
-                    with tag('li'):
-                        text(y[0])
-                    with tag('li'):
-                        text(y[1])
-                    with tag('li'):
-                        pl = "PlaySound('"
-                        #append pid which will later show up album + ')
-                        st = "StopSound('"
-                        pid = x
-                        play = pl + x + "')"
-                        stop = st + x + "')"
-                        audi = y[2]
-                        alb = y[3]
-
-                                #append pid which will later show up album + ')
-                        doc.stag('img', src = alb, onmouseover = play, onmouseout = stop)
-                        with tag('audio', src = audi, id = pid):
-                            pass
-        d1list.append(doc.getvalue())
-    leftover = biglength - len(d1list)
-
-    for x in range(leftover):
-        d1list.append("<td></td>")
-
-    
-    
-    for x,y in sdict.items():
-        #print(x)
-        doc, tag, text = Doc().tagtext()
-        with tag('td'):
-                with tag('ul'):
-                    with tag('li'):
-                        text(y[0])
-                    with tag('li'):
-                        text(y[1])
-                    with tag('li'):
-                        pl = "PlaySound('"
-                        #append pid which will later show up album + ')
-                        st = "StopSound('"
-                        pid = x
-                        play = pl + x + "')"
-                        stop = st + x + "')"
-                        audi = y[2]
-                        alb = y[3]
-
-                                #append pid which will later show up album + ')
-                        doc.stag('img', src = alb, onmouseover = play, onmouseout = stop)
-                        with tag('audio', src = audi, id = pid):
-                            pass
-        #fileout = open("out.html","w+")
-        #fileout.write(indent(doc.getvalue()))
-        slist.append(doc.getvalue())
-    
-    #print(slist)
-        #fileout = open("out.html","w+")
-        #fileout.write(indent(doc.getvalue()))
-
-    leftover = biglength - len(slist)
-    for x in range(leftover):
-        slist.append("<td></td>")
-
-   #print(slist)
-
-    for x,y in d2dict.items():
-        doc, tag, text = Doc().tagtext()
-        with tag('td'):
-                with tag('ul'):
-                    with tag('li'):
-                        text(y[0])
-                    with tag('li'):
-                        text(y[1])
-                    with tag('li'):
-                        pl = "PlaySound('"
-                        #append pid which will later show up album + ')
-                        st = "StopSound('"
-                        pid = x
-                        play = pl + x + "')"
-                        stop = st + x + "')"
-                        audi = y[2]
-                        alb = y[3]
-
-                                #append pid which will later show up album + ')
-                        doc.stag('img', src = alb, onmouseover = play, onmouseout = stop)
-                        with tag('audio', src = audi, id = pid):
-                            pass
-        d2list.append(doc.getvalue())
-    
-    leftover = biglength - len(d2list)
-    for x in range(leftover):
-        d2list.append("<td></td>")
-
-    print("About to write!")
-    #doc, tag, text = Doc().tagtext()
-    #with tag('table'):
-        #with tag('tr'):
-            #with tag('th'):
-            #    text("Unique in Playlist 1")
-            #with tag('th'):
-            #    text("Same Songs in both!")
-            #with tag('th'):
-            #    text("Unique in Playlist 2")
-            #    print("we're at the writing stage")
-        #for x in range(biglength): 
-            #print('in the range')
-            #with tag('tr'):
-                #print(d1list[x])
-                #text(d1list[x])
-                #text(slist[x])
-                #text(d2list[x])
-    #fileout = open("outnow3.html","w+")               
-    html= "<table><tr><th>Unique in Playlist 1</th><th>Same Songs in Both!</th><th>Unique in Playlist 2</th></tr>"
-    #print('final')
-    #fileout.write(html)
-    #print(html)
-    for x in range(len(d1list)):
-        #toadd = d1list[x]
-        #print(toadd)
-        html = html + "<tr>"
-        html = html + d1list[x]
-        #print(slist[x])
-        html = html + slist[x] 
-        html = html + d2list[x]
-        html = html + "</tr>"
-        #fileout.write(html)
-    html = html + "</table>"     
-    #print(doc.getvalue())
-    #print(html)
-    #fileout.write(html)
-    return html
 
 
     #<table>
@@ -208,49 +53,24 @@ def buildHTML(sdict,d1dict,d2dict):
 
 
 
-def toTest(p1,p2):
-    tohave = "https://open.spotify.com/playlist/"
-    if tohave in p1 and tohave in p2:
-        return True
-    else:
-        return False
-
-
-def dict_compare(d1, d2):
-    set1 = set(d1.keys())
-    set2 = set(d2.keys())
-    intersection = set1.intersection(set2)
-    difset1 = set1.difference(intersection)
-    difset2 = set2.difference(intersection)
-    same = {}
-    for x in d1,intersection:
-        if intersection(x) == x.keys():
-            same.update({intersection(x):(x.values())})
-            x.popitem()
-    print(same)
-#TODO: So we can still have our regular compare go on , i think I get the ID's, and then just get the info i need as a dict after that cause this is shit man  
-
 
 
 def addtoModels(dif1,same,dif2,songs):
-    print("got to models!")
     d1 = []
     sm = []
-    d2 = []
-    #lets make list models!
+    d2 = []  
     slist = []
     d1list = []
     d2list = []
+    #We set up empty lists, the major lists will be 2d lists, so [][], and the smaller ones will be our parts in that
+
+    #We do the same thing for each list: get pid, all the info we need, put em into one list, put that list into another one.
     for x in same:
         sm = [x]
         el = songs.get(x)
         sm = sm + el
 
         slist.append(sm)
-        #print(sm)
-        #sm = songs.get(x)
-        #sdict.update({x:sm})
-        #cover = result['image']
 
     for x in dif1:
         d1 = [x]
@@ -258,29 +78,16 @@ def addtoModels(dif1,same,dif2,songs):
         d1 = d1 + el
         d1list.append(d1)
 
-        #d1 = songs.get(x)
-        #d1dict.update({x:d1})
-        #cover = result['images']['url']
     for x in dif2:
         d2 = [x]
         el = songs.get(x)
         d2 = d2 + el
         d2list.append(d2)
 
-
-        #d2 = songs.get(x)
-        #d2dict.update({x:d2})
-    print("meow")
-    #html = buildHTML(sdict,d1dict,d2dict)
+    #We take these to buildCompare to fluff up them lists with appropiate empty space
     d1list,slist,d2list = buildCompare(d1list,slist,d2list)
     return d1list,slist,d2list
-    #model = models.Global(len(dif1),len(same),len(dif2))
-    #model.save()
-    #print("Add to models numbers: ", len(sdict),len(d1dict),len(d2dict))
-
-    #for key, value in d1dict.items():
-        #print(f"{key}: {value}")
-    #return d1dict,sdict,d2dict
+   
 
 
 
@@ -291,6 +98,7 @@ def clean(playlist):
 
 
 def getToken():
+    #this is just client id's and secrets for the spotifyapi
     clid = "432742e8cdd04d149d847dd79a797024"
     clet = "69a867f4a0544550bf6c10e2f94b26c2"
     yuri = "http://alexys.online/projects/Compare"
@@ -298,15 +106,14 @@ def getToken():
     sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=clid,client_secret=clet))
     return sp
 
-    #sp_oauth = SpotifyOAuth(client_id=clid,client_secret=clet,redirect_uri=yuri)
-    #access_token = sp_oauth.get_access_token()
-    #refresh_token = sp_oauth.get_refresh_token()
-    #return access_token
+    
 
 
 def compare(id1,id2):
     set1 = set(id1)
     set2 = set(id2)
+    #Turn them into sets and get intersections and differences of them
+    #That way we can get unique and not unique songs 
     intersection = set1.intersection(set2)
     difset1 = set1.difference(intersection)
     difset2 = set2.difference(intersection)
@@ -314,9 +121,7 @@ def compare(id1,id2):
     dif1 = list(difset1)
     dif2 = list(difset2)
     same = list(intersection)
-
-    # to test if they all up
-    print( len(dif1),len(same), len(dif2))
+    #return them back into a list
 
     #addtoModels(dif1,same,dif2)
     return dif1,same,dif2
@@ -327,38 +132,24 @@ def compare(id1,id2):
 def callSpotify(p,thisdict):
     offset = 0
     sp = getToken()
-    print(sp)
-    #data = access_token.json()
-    #print(data["error"])
-    
-
+   #We need a token in order to call spotify's api
 
     flag = True
     songids = []
-    #results = sp.playlist_items(p,offset=offset,fields='items.track',additional_types=['track'])
-    #result = json.dumps(results, indent=2)
-    #fileout = open("out.JSON","w+")
-    #fileout.write(result)
-    #print(results)
-    #if len(results['items']) == 0:
-    #flag = False
+  #Setting up for loops and holding info
     count = 0
     while flag == True:
-    
-        #results = sp.playlist_items(p2,offset=offset,fields='items.track.name.total',additional_types=['track'])
         results = sp.playlist_items(p,offset=offset,fields='items.track',additional_types=['track'])
-        
         
         if len(results['items']) == 0:
             flag = False
         
-        
-
-        
         offset = offset + len(results['items'])
-        
-        
+        #The previous steps just make sure we keep iterating since the spotify api only allows us to get
+        #up to a hundred songs per capture
+
         for idx, track in enumerate(results['items']):
+            #This for loops add the info from the results into a list and a song dict. We'll use the info to pool info again later
             listing = []
             
             songids.append(str(track['track']['id']))
@@ -369,20 +160,10 @@ def callSpotify(p,thisdict):
             listing.append(str(track['track']['album']['images'][2]['url'])) #album
             # pid = 0, name = 1, artist = 2, audio = 3, album = 4
 
-            #increment = 100*count + idx
-            #print("New Song!: ID:",pid)
-            #print("Name:", name)
-            #print(artist)
-            #print(audio)
-            #print(album)
-            #thisdict.update({"id":pid,"name":name,"artist":artist,"audio":audio,"album":album})
-
-            #thisdict.update({increment:pid{{"name":name},{"artist":artist},{"audio":audio},{"album":album}}})
+            
             thisdict.update({pid:listing})
            
-            #print("toadd and increment:",toAdd,increment)
         count +=1
-    #print(thisdict.items())
     return songids,thisdict
 
 
@@ -391,38 +172,27 @@ def callSpotify(p,thisdict):
 def getPlaylists(play1,play2):
     p1 = clean(play1)
     p2 = clean(play2)
+    #cleans the link to give us the info we actually need: the playlist id
     songdict= {}
     id1,songdict =  callSpotify(p1,songdict)
     id2,songdict = callSpotify(p2,songdict)
-    #dict_compare(dict1,dict2)
-    #print(id1,id2)
-    print("okay this is dict1:",len(songdict))
+    #we do this twice  to keep the song dict reiterating
     
 
     dif1, same, dif2 = compare(id1,id2)
-    print("got after compare!")
+    #This gives us our different lists and our same list of id for songs
     length = [len(same),len(dif1),len(dif2)]
     biglength = length[1] if length[1] >= length[2] else length[2]
-    print (length)
+    #this is for later reiterating purposes and getting that info for the table
+
     dif1,same,dif2 =addtoModels(dif1,same,dif2,songdict)
+    #from here we fluff up the lists for the table with empty strings and get em to the right size for the table
+    # this also connects our song id's to the info we need via the songdict
 
-
-    print("meow part 2")
-    a = []
-    for x in range(biglength):
-        a.append(x)
-    for x in a:
-        print(dif1[x][0])
-        print(same[x][1])
-        print(dif2[x][2])
 
     
     ultlist = ult(dif1,same,dif2)
-    #return dif1,same,dif2,length, biglength,a
-    return ultlist,length,biglength,a
+    # I didn't wanna do this but i couldn't find a way to iterate over 3 seperate lists so i  put em all together to iterate on in the table
+    return ultlist,length,biglength
     #todo: Have a dict for all the song stuff we need, sets to show, and then we go down and find all the dict for said lists so that we don't have to results twice
     
-    #print(len(dif1),len(same), len(dif2), "second time!")
-
-#lets duck it
-# we have  
