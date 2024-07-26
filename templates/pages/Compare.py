@@ -138,25 +138,26 @@ def buildHTML(sdict,d1dict,d2dict):
                 #text(d1list[x])
                 #text(slist[x])
                 #text(d2list[x])
-    fileout = open("outnow2.html","w+")               
+    #fileout = open("outnow3.html","w+")               
     html= "<table><tr><th>Unique in Playlist 1</th><th>Same Songs in Both!</th><th>Unique in Playlist 2</th></tr>"
     #print('final')
-    fileout.write(html)
+    #fileout.write(html)
+    #print(html)
     for x in range(len(d1list)):
         #toadd = d1list[x]
         #print(toadd)
-        html = "<tr>"
+        html = html + "<tr>"
         html = html + d1list[x]
         #print(slist[x])
         html = html + slist[x] 
         html = html + d2list[x]
-        html +="</tr>"
-        fileout.write(html)
-    html ="</table>"     
+        html = html + "</tr>"
+        #fileout.write(html)
+    html = html + "</table>"     
     #print(doc.getvalue())
-    print(html)
-    
-    fileout.write(html)
+    #print(html)
+    #fileout.write(html)
+    return html
 
 
     #<table>
@@ -222,7 +223,9 @@ def addtoModels(dif1,same,dif2,songs):
         #print(result)
 
         d2dict.update({x:d2})
-    buildHTML(sdict,d1dict,d2dict)
+    print("meow")
+    html = buildHTML(sdict,d1dict,d2dict)
+    return html
     #model = models.Global(len(dif1),len(same),len(dif2))
     #model.save()
     #print("Add to models numbers: ", len(sdict),len(d1dict),len(d2dict))
@@ -347,9 +350,11 @@ def getPlaylists(play1,play2):
     #print(id1,id2)
     print("okay this is dict1:",len(songdict))
     
+
     dif1, same, dif2 = compare(id1,id2)
-    addtoModels(dif1,same,dif2,songdict)
-    return dif1,same,dif2,songdict
+    print("got after compare!")
+    html = addtoModels(dif1,same,dif2,songdict)
+    return dif1,same,dif2,html
     #todo: Have a dict for all the song stuff we need, sets to show, and then we go down and find all the dict for said lists so that we don't have to results twice
     
     #print(len(dif1),len(same), len(dif2), "second time!")
