@@ -16,6 +16,8 @@ def spotify(request):
         playlists = request.POST.dict()
         play1 =playlists.get("play1")
         play2 =playlists.get("play2")
+        if play1 == play2:
+            return render(request,"pages/compare.html",{"badmessage":"These are the same link, Please use different spotify links!"})
         try:
             ultlist,length,biglength = Compare.getPlaylists(play1,play2)
         except:
