@@ -164,7 +164,9 @@ def callSpotify(p,thisdict):
             thisdict.update({pid:listing})
            
         count +=1
-    return songids,thisdict
+    results = sp.user_playlist(user=None, playlist_id=p,fields="name")
+    name = results["name"]
+    return songids,thisdict,name
 
 
     
@@ -174,14 +176,14 @@ def getPlaylists(play1,play2):
     p2 = clean(play2)
     #cleans the link to give us the info we actually need: the playlist id
     songdict= {}
-    id1,songdict =  callSpotify(p1,songdict)
-    id2,songdict = callSpotify(p2,songdict)
+    id1,songdict,p1Name =  callSpotify(p1,songdict)
+    id2,songdict,p2Name = callSpotify(p2,songdict)
     #we do this twice  to keep the song dict reiterating
     
 
     dif1, same, dif2 = compare(id1,id2)
     #This gives us our different lists and our same list of id for songs
-    length = [len(same),len(dif1),len(dif2)]
+    length = [len(same),len(dif1),len(dif2),p1Name,p2Name]
     biglength = length[1] if length[1] >= length[2] else length[2]
     #this is for later reiterating purposes and getting that info for the table
 
